@@ -13,7 +13,6 @@ from ./imports/timeHandler import
   getAccummulatedTime,
   togglePause
 
-# TODO: move time management out of the irrelevant procedures
 # TODO: load previus proj and task
 # TODO: show today, this week, cummulated times
 # TODO: option to save time recording
