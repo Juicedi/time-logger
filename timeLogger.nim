@@ -11,6 +11,7 @@ from ./imports/timeHandler import
   isTimePaused,
   accummulateTime,
   getAccummulatedTime,
+  restartTimer,
   togglePause
 
 # TODO: load previus proj and task
@@ -40,18 +41,39 @@ proc startTask(): void =
   echo userInputHelperText
   writeStatus()
 
+proc mainMenuLoop(): void =
+  while true:
+    input = getch()
+
+    if input.ord == 27: break
+    if input == 'n':
+      startTask()
+      taskInputLoop()
+    # if number ... start previously run task
+
+proc endTask(): void =
+  echo "task ended"
+  if isTimePaused == false: echo accummulateTime()
+  saveCurrentTask(getAccummulatedTime())
+  restartTimer()
+  mainMenuLoop()
+
+proc taskInputLoop(): bool =
+  while true:
+    input = getch()
+
+    if input.ord == 27:
+      # if paused, the accummulator has already been updated
+      if isTimePaused == false: echo accummulateTime()
+      result = false
+      break
+    if input == 'p': togglePause()
+    if isTimePaused == true: continue
+    if input == 'n': startTask()
+    if input == 'e': endTask()
+    if input == 'r':
+      eraseStatus()
+      writeStatus()
+
 startTask()
-
-while true:
-  input = getch()
-
-  if input.ord == 27:
-    # if paused, the accummulator has already been updated
-    if isTimePaused == false: echo accummulateTime()
-    break
-  if input == 'p': togglePause()
-  if isTimePaused == true: continue
-  if input == 'n': startTask()
-  if input == 'r':
-    eraseStatus()
-    writeStatus()
+taskInputLoop()

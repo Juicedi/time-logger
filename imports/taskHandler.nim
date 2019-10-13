@@ -6,6 +6,9 @@ const currentTaskBeginning = "Current task -- "
 var project*: string
 var task*: string
 
+proc saveCurrentTask: void =
+  echo "saving task"
+
 proc changeNames*(): void =
   stdout.write(currentProjectBeginning)
   project = inputString(currentProjectBeginning.len)

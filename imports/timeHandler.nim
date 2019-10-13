@@ -21,6 +21,9 @@ proc accummulateTime*(): Duration =
 proc getAccummulatedTime*(): Duration =
   result = accummulator + (getTime() - startTime)
 
+proc restartTimer*(): void =
+  startTime = getTime()
+
 proc togglePause*() =
   isTimePaused = not isTimePaused
   cursorUp()
