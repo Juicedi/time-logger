@@ -5,6 +5,7 @@ from terminal import
   eraseLine
 from ./imports/taskHandler import
   changeNames,
+  saveCurrentTask,
   project,
   task
 from ./imports/timeHandler import
@@ -18,11 +19,16 @@ from ./imports/timeHandler import
 # TODO: show today, this week, cummulated times
 # TODO: option to save time recording
 
-const userInputHelperText =
+const taskMenuHelperText =
   "r = refresh status, " &
   "p = pause, " &
   "esc = exit, " &
   "n = rename" &
+  "\n"
+const mainMenuHelperText =
+  "# = continue previous task, " &
+  "esc = exit, " &
+  "n = start new task" &
   "\n"
 
 var input: char
@@ -32,48 +38,55 @@ proc eraseStatus(): void =
   eraseLine()
 
 proc writeStatus(): void =
-  echo project & " - " & task & ": " & $getAccummulatedTime()
+  echo project & " - " & task & ": " & getAccummulatedTime()
 
 # TODO: better name for this procedure
 proc startTask(): void =
   echo "\n"
   changeNames()
-  echo userInputHelperText
+  echo taskmenuHelperText
   writeStatus()
 
-proc mainMenuLoop(): void =
-  while true:
-    input = getch()
-
-    if input.ord == 27: break
-    if input == 'n':
-      startTask()
-      taskInputLoop()
-    # if number ... start previously run task
-
-proc endTask(): void =
+proc saveTaskData(): void =
   echo "task ended"
   if isTimePaused == false: echo accummulateTime()
   saveCurrentTask(getAccummulatedTime())
-  restartTimer()
-  mainMenuLoop()
 
-proc taskInputLoop(): bool =
-  while true:
+proc taskInputLoop(): void =
+  var running = true
+  while running:
     input = getch()
 
     if input.ord == 27:
       # if paused, the accummulator has already been updated
       if isTimePaused == false: echo accummulateTime()
-      result = false
-      break
+      running = false
     if input == 'p': togglePause()
     if isTimePaused == true: continue
     if input == 'n': startTask()
-    if input == 'e': endTask()
+    if input == 'e':
+      saveTaskData()
+      running = false
     if input == 'r':
       eraseStatus()
       writeStatus()
 
+proc mainMenuLoop(startTask: bool): void =
+  var running = true
+
+  if startTask: taskInputLoop()
+
+  echo "\n\n" & mainMenuHelperText
+
+  while running:
+    input = getch()
+
+    if input.ord == 27: running = false
+    if input == 'n':
+      startTask()
+      taskInputLoop()
+      echo "\n\n" & mainMenuHelperText
+    # if number ... start previously run task
+
 startTask()
-taskInputLoop()
+mainMenuLoop(startTask = true)

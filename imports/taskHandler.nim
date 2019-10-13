@@ -6,7 +6,7 @@ const currentTaskBeginning = "Current task -- "
 var project*: string
 var task*: string
 
-proc saveCurrentTask: void =
+proc saveCurrentTask*(time: string): void =
   echo "saving task"
 
 proc changeNames*(): void =

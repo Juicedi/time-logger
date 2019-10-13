@@ -18,8 +18,8 @@ proc accummulateTime*(): Duration =
   accummulator += getTime() - startTime
   return accummulator
 
-proc getAccummulatedTime*(): Duration =
-  result = accummulator + (getTime() - startTime)
+proc getAccummulatedTime*(): string =
+  result = $(accummulator + (getTime() - startTime))
 
 proc restartTimer*(): void =
   startTime = getTime()
