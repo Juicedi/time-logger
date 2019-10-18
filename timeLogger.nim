@@ -9,6 +9,7 @@ import ./imports/timeHandler
 const taskMenuHelperText =
   "r = refresh status, " &
   "p = pause, " &
+  "e = end recording, " &
   "esc = exit, " &
   "n = rename" &
   "\n"
