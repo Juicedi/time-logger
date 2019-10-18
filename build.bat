@@ -1,1 +1,1 @@
-nim c -r -o:dist\timeLogger.exe .\timeLogger.nim
+nim c -r --threads -o:dist\timeLogger.exe .\timeLogger.nim

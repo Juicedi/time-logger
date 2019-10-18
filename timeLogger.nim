@@ -1,4 +1,4 @@
-import terminal
+import terminal, threadpool, os
 import ./imports/taskHandler
 import ./imports/timeHandler
 
@@ -34,31 +34,34 @@ proc startNewTask(): void =
   writeStatus()
 
 proc taskInputLoop(): void =
+  var asyncInput = spawn getch()
+  var asyncChar: char
+
   while true:
-    input = getch()
+    if asyncInput.isReady():
+      asyncChar = ^asyncInput
+      echo asyncChar
+      if asyncChar.ord == 27:
+        break
 
-    if input.ord == 27:
-      break
+      if asyncChar == 'p':
+        togglePause()
 
-    if input == 'p':
-      togglePause()
+      if isTimePaused == false:
+        discard accummulateTime()
 
-    if isTimePaused == true:
-      continue
+        if asyncChar == 'n':
+          startNewTask()
 
-    discard accummulateTime()
-
-    if input == 'n':
-      startNewTask()
-
-    if input == 's':
-      commentTimeLog()
-      saveCurrentTask(getAccummulatedTime())
-      break
-
-    if input == 'r':
+        if asyncChar == 's':
+          commentTimeLog()
+          saveCurrentTask(getAccummulatedTime())
+          break
+      asyncInput = spawn getch()
+    if isTimePaused == false:
       eraseStatus()
       writeStatus()
+    sleep(100)
 
 proc mainMenuLoop(): void =
   while true:
