@@ -1,8 +1,5 @@
-from terminal import getch, cursorBackward, cursorForward, setCursorXPos
-from strutils import delete
-from ./autocompleteHandler import
-  autocomplete,
-  tabPressCount
+import terminal, strutils
+import ./autocompleteHandler
 
 proc eraseCurrentInputText(passedResult: string, padding: int): void =
   setCursorXPos(padding)

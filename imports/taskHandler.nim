@@ -1,4 +1,4 @@
-from ./inputHandler import inputString
+import ./inputHandler
 
 const currentProjectBeginning = "Current project -- "
 const currentTaskBeginning = "Current task -- "

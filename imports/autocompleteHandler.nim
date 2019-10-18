@@ -1,4 +1,4 @@
-from strutils import contains
+import strutils
 
 const learnedWords = [
   "hello",

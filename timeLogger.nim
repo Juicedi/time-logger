@@ -1,19 +1,6 @@
-from terminal import
-  getch,
-  cursorDown,
-  cursorUp,
-  eraseLine
-from ./imports/taskHandler import
-  changeNames,
-  saveCurrentTask,
-  project,
-  task
-from ./imports/timeHandler import
-  isTimePaused,
-  accummulateTime,
-  getAccummulatedTime,
-  restartTimer,
-  togglePause
+import terminal
+import ./imports/taskHandler
+import ./imports/timeHandler
 
 # TODO: load previus proj and task
 # TODO: show today, this week, cummulated times

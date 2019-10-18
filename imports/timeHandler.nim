@@ -1,14 +1,4 @@
-from terminal import
-  cursorUp,
-  cursorDown,
-  eraseLine
-from times import
-  getTime,
-  inSeconds,
-  Duration,
-  `-`,
-  `+`,
-  `+=`
+import terminal, times
 
 var accummulator: Duration
 var startTime = getTime()
