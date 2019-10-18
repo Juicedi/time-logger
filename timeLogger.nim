@@ -37,43 +37,59 @@ proc startTask(): void =
 
 proc saveTaskData(): void =
   echo "task ended"
-  if isTimePaused == false: echo accummulateTime()
+
+  if isTimePaused == false:
+    echo accummulateTime()
+
   saveCurrentTask(getAccummulatedTime())
 
 proc taskInputLoop(): void =
-  var running = true
-  while running:
+  while true:
     input = getch()
 
     if input.ord == 27:
-      # if paused, the accummulator has already been updated
-      if isTimePaused == false: echo accummulateTime()
-      running = false
-    if input == 'p': togglePause()
-    if isTimePaused == true: continue
-    if input == 'n': startTask()
+      break
+
+    if input == 'p':
+      togglePause()
+
+    if isTimePaused == true:
+      continue
+
+    if input == 'n':
+      startTask()
+
     if input == 'e':
       saveTaskData()
-      running = false
+      break
+
     if input == 'r':
       eraseStatus()
       writeStatus()
 
+  # if paused, the accummulator has already been updated
+  if isTimePaused == false: echo accummulateTime()
+
+
 proc mainMenuLoop(startTask: bool): void =
   var running = true
 
-  if startTask: taskInputLoop()
+  if startTask:
+    taskInputLoop()
 
   echo "\n\n" & mainMenuHelperText
 
   while running:
     input = getch()
 
-    if input.ord == 27: running = false
+    if input.ord == 27:
+      running = false
+
     if input == 'n':
       startTask()
       taskInputLoop()
       echo "\n\n" & mainMenuHelperText
+
     # if number ... start previously run task
 
 startTask()
