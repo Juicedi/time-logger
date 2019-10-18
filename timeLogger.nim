@@ -9,8 +9,8 @@ import ./imports/timeHandler
 const taskMenuHelperText =
   "r = refresh status, " &
   "p = pause, " &
-  "e = end recording, " &
-  "esc = exit, " &
+  "s = save and exit, " &
+  "esc = exit without saving, " &
   "n = rename" &
   "\n"
 const mainMenuHelperText =
@@ -28,20 +28,10 @@ proc eraseStatus(): void =
 proc writeStatus(): void =
   echo project & " - " & task & ": " & getAccummulatedTime()
 
-# TODO: better name for this procedure
-proc startTask(): void =
-  echo "\n"
+proc startNewTask(): void =
   changeNames()
   echo taskmenuHelperText
   writeStatus()
-
-proc saveTaskData(): void =
-  echo "task ended"
-
-  if isTimePaused == false:
-    echo accummulateTime()
-
-  saveCurrentTask(getAccummulatedTime())
 
 proc taskInputLoop(): void =
   while true:
@@ -56,41 +46,36 @@ proc taskInputLoop(): void =
     if isTimePaused == true:
       continue
 
-    if input == 'n':
-      startTask()
+    discard accummulateTime()
 
-    if input == 'e':
-      saveTaskData()
+    if input == 'n':
+      startNewTask()
+
+    if input == 's':
+      commentTimeLog()
+      saveCurrentTask(getAccummulatedTime())
       break
 
     if input == 'r':
       eraseStatus()
       writeStatus()
 
-  # if paused, the accummulator has already been updated
-  if isTimePaused == false: echo accummulateTime()
-
-
-proc mainMenuLoop(startTask: bool): void =
-  var running = true
-
-  if startTask:
-    taskInputLoop()
-
-  echo "\n\n" & mainMenuHelperText
-
-  while running:
+proc mainMenuLoop(): void =
+  while true:
     input = getch()
 
     if input.ord == 27:
-      running = false
+      break
 
     if input == 'n':
-      startTask()
+      restartTimer()
+      startNewTask()
       taskInputLoop()
       echo "\n\n" & mainMenuHelperText
 
     # if number ... start previously run task
 
-startTask()
-mainMenuLoop(startTask = true)
+startNewTask()
+taskInputLoop()
+echo "\n\n" & mainMenuHelperText
+mainMenuLoop()
