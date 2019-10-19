@@ -1,5 +1,5 @@
 import terminal, strutils
-import ./autocompleteHandler
+import ./autocompletion
 
 proc eraseCurrentInputText(passedResult: string, padding: int): void =
   setCursorXPos(padding)
