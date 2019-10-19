@@ -7,7 +7,6 @@ import ./imports/timeHandler
 # TODO: record time to file
 
 const taskMenuHelperText =
-  "r = refresh status, " &
   "p = pause, " &
   "s = save and exit, " &
   "esc = exit without saving, " &
