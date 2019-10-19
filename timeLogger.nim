@@ -4,7 +4,7 @@ import ./imports/timeHandler
 
 # TODO: load previus proj and task
 # TODO: show today, this week, cummulated times
-# TODO: option to save time recording
+# TODO: record time to file
 
 const taskMenuHelperText =
   "r = refresh status, " &
@@ -21,12 +21,8 @@ const mainMenuHelperText =
 
 var input: char
 
-proc eraseStatus(): void =
-  cursorUp()
-  eraseLine()
-
 proc writeStatus(): void =
-  echo project & " - " & task & ": " & getAccummulatedTime()
+  stdout.write(project & " - " & task & ": " & getAccummulatedTime())
 
 proc startNewTask(): void =
   changeNames()
@@ -37,46 +33,42 @@ proc taskInputLoop(): void =
   var asyncInput = spawn getch()
   var asyncChar: char
 
+  hideCursor()
+
   while true:
+    asyncChar = ' '
     if asyncInput.isReady():
       asyncChar = ^asyncInput
-      echo asyncChar
-      if asyncChar.ord == 27:
-        break
-
-      if asyncChar == 'p':
-        togglePause()
-
-      if isTimePaused == false:
-        discard accummulateTime()
-
-        if asyncChar == 'n':
-          startNewTask()
-
-        if asyncChar == 's':
-          commentTimeLog()
-          saveCurrentTask(getAccummulatedTime())
-          break
       asyncInput = spawn getch()
+    if asyncChar.ord == 27:
+      showCursor()
+      break
+    if asyncChar == 'p':
+      togglePause()
+    if asyncChar == 's':
+      showCursor()
+      saveCurrentTask(getAccummulatedTime())
+      break
     if isTimePaused == false:
-      eraseStatus()
+      if asyncChar == 'n':
+        showCursor()
+        startNewTask()
+        hideCursor()
+      accummulateTime()
+      eraseLine()
       writeStatus()
     sleep(100)
 
 proc mainMenuLoop(): void =
   while true:
     input = getch()
-
-    if input.ord == 27:
-      break
-
+    if input.ord == 27: break
+  # if input == number ... start previously run task
     if input == 'n':
       restartTimer()
       startNewTask()
       taskInputLoop()
       echo "\n\n" & mainMenuHelperText
-
-    # if number ... start previously run task
 
 startNewTask()
 taskInputLoop()
