@@ -2,12 +2,6 @@ import terminal, threadpool, os
 import ./imports/tasks
 import ./imports/time
 
-# TODO: load previus proj and task
-# TODO: show today, this week, cummulated times
-# TODO: record time to file
-# TODO: fix input issue when leaving taskloop to mainloop (first input not
-# responsive)
-
 const
   escOrd = 27
   pOrd   = 112
