@@ -20,7 +20,6 @@ proc togglePause*() =
   eraseLine()
 
   if isTimePaused == true:
-    stdout.write("paused")
     accummulateTime()
   else:
     startTime = getTime()
