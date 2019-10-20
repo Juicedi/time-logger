@@ -1,4 +1,5 @@
 import ./inputs
+import ./files
 
 const currentProjectBeginning = "Current project -- "
 const currentTaskBeginning = "Current task -- "
@@ -16,9 +17,7 @@ proc saveCurrentTask*(time: string): void =
   commentTimeLog()
   echo "\n"
   echo "saving task"
-  echo project
-  echo task
-  echo comment
+  saveText(project = project, task = task, comment = comment)
 
 proc changeNames*(): void =
   stdout.write("\n" & currentProjectBeginning)
