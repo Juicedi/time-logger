@@ -3,18 +3,14 @@ import os
 const inputFile = "output.txt"
 const outputFile = "temp.txt"
 
-proc saveText*(project: string, task: string, comment: string): void =
+proc saveText*(project: string, task: string, comment: string, time: string): void =
+  var i: File
   var line = ""
-  var
-    i: File
-    o = open(outputFile, fmWrite)
+  var o = open(outputFile, fmWrite)
 
   if fileExists(inputFile):
     i = open(inputFile)
-
-    while i.readLine(line):
-      o.writeLine(line)
-
+    while i.readLine(line): o.writeLine(line)
     i.close()
   else:
     echo "no input file, creating new one"
@@ -24,6 +20,7 @@ proc saveText*(project: string, task: string, comment: string): void =
   o.writeLine(project)
   o.writeLine(task)
   o.writeLine(comment)
+  o.writeLine(time)
   o.close()
 
   discard tryRemoveFile(inputFile)

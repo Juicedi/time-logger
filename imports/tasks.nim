@@ -17,7 +17,7 @@ proc saveCurrentTask*(time: string): void =
   commentTimeLog()
   echo "\n"
   echo "saving task"
-  saveText(project = project, task = task, comment = comment)
+  saveText(project = project, task = task, comment = comment, time = time)
 
 proc changeNames*(): void =
   stdout.write("\n" & currentProjectBeginning)
