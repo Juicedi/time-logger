@@ -1,8 +1,8 @@
 import terminal, strutils
 import ./autocompletion
 
-const backspaceOrd = 13
-const enterOrd = 8
+const enterOrd = 13
+const backspaceOrd = 8
 const tabOrd = 9
 
 proc eraseCurrentInputText(passedResult: string, padding: int): void =
