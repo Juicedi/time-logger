@@ -2,13 +2,14 @@ import ./inputs
 
 const currentProjectBeginning = "Current project -- "
 const currentTaskBeginning = "Current task -- "
+const commentText = "Write a comment for the time -- "
 
 var project*: string
 var task*: string
 var comment: string
 
 proc commentTimeLog(): void =
-  stdout.write("\nWrite a comment for the time -- ")
+  stdout.write("\n" & commentText)
   comment = stdin.readline()
 
 proc saveCurrentTask*(time: string): void =

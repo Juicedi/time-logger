@@ -1,6 +1,10 @@
 import terminal, strutils
 import ./autocompletion
 
+const backspaceOrd = 13
+const enterOrd = 8
+const tabOrd = 9
+
 proc eraseCurrentInputText(passedResult: string, padding: int): void =
   setCursorXPos(padding)
   for i in 0..passedResult.len:
@@ -12,7 +16,7 @@ proc inputString*(min: int): string =
   var originalText: string
   var input: char
 
-  proc handleBackspace(passedResult: string): string =
+  proc removeCharacter(passedResult: string): string =
     var resultText = passedResult
     pressedOtherKeyThanTab = true
 
@@ -25,7 +29,7 @@ proc inputString*(min: int): string =
 
     return resultText
 
-  proc handleTab(passedResult: string): string =
+  proc autocompleteInput(passedResult: string): string =
     var autocompleteResult: string
 
     if passedResult.len == 0: return passedResult
@@ -49,9 +53,9 @@ proc inputString*(min: int): string =
   while true:
     input = getch()
     case input.ord
-    of 13: break # Enter is pressed
-    of 8: result = handleBackspace(result)
-    of 9: result = handleTab(result)
+    of enterOrd: break
+    of backspaceOrd: result = removeCharacter(result)
+    of tabOrd: result = autocompleteInput(result)
     else:
       pressedOtherKeyThanTab = true
       stdout.write(input)
