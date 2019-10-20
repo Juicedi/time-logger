@@ -16,8 +16,11 @@ terminal. This command will compile the program to your current directory.
 This projects goal is to create a time logging tool that will be faster and
 easier to use than the applications in the web.
 
-### TODOS
-* Load previus proj and task
+### Todos
+* Load previus project and task
 * Show today, this week, cummulated times
-* Record time to file
+* Time log folder structure:
+    * Project folder
+    * Task files
+    * Timelogs with comments
 * Fix input issue when leaving taskloop to mainloop (first input not responsive)
