@@ -25,3 +25,4 @@ easier to use than the applications in the web.
     * Timelogs with comments
 * Fix input issue when leaving taskloop to mainloop (first input not responsive)
 * Ensure the times are synchronized only once by saving the log id from server
+    * check how the api calls are actually done
