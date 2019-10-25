@@ -19,10 +19,6 @@ easier to use than the applications in the web.
 ### Todos
 * Load previus project and task
 * Show today, this week, cummulated times
-* Time log folder structure:
-    * Project folder
-    * Task files
-    * Timelogs with comments
 * Fix input issue when leaving taskloop to mainloop (first input not responsive)
 * Ensure the times are synchronized only once by saving the log id from server
     * check how the api calls are actually done
