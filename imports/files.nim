@@ -1,29 +1,32 @@
 import os
 
-const inputFile = "output.txt"
+const logsPath = "logs/"
 const outputFile = "temp.txt"
 
 proc saveText*(project: string, task: string, comment: string, time: string): void =
+  let projectPath = logsPath & project & "/"
+  let inputFilePath = projectPath & task & ".txt"
   var i: File
   var line = ""
-  var o = open(outputFile, fmWrite)
+  let o = open(outputFile, fmWrite)
 
-  if fileExists(inputFile):
-    i = open(inputFile)
+  discard logsPath.existsOrCreateDir()
+  discard projectPath.existsOrCreateDir()
+
+  if inputFilePath.fileExists():
+    i = inputFilePath.open()
     while i.readLine(line): o.writeLine(line)
     i.close()
   else:
     echo "no input file, creating new one"
-    i = open(inputFile, fmWrite)
+    i = inputFilePath.open(fmWrite)
     i.close()
 
-  o.writeLine(project)
-  o.writeLine(task)
+  o.write(time & " -- ")
   o.writeLine(comment)
-  o.writeLine(time)
   o.close()
 
-  discard tryRemoveFile(inputFile)
-  moveFile(outputFile, inputFile)
+  discard tryRemoveFile(inputFilePath)
+  moveFile(outputFile, inputFilePath)
 
 # saveText(project = "hello", task = "test", comment = "this is just a test")
