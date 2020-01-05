@@ -3,10 +3,6 @@ import json
 import httpClient
 from base64 import encode
 
-#[
-# TODO: Get all user's tasks and save their name, company, ID
-]#
-
 var configStream = newFileStream("../config.json", fmRead)
 var configJson = parseJson(configStream.readAll())
 var baseUrl = getStr(configJson["baseUrl"])
