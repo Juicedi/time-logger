@@ -9,29 +9,31 @@ from base64 import encode
 
 var configStream = newFileStream("../config.json", fmRead)
 var configJson = parseJson(configStream.readAll())
-var token = getStr(configJson["token"])
-var userId = getStr(configJson["userId"])
 var baseUrl = getStr(configJson["baseUrl"])
+var userId = getStr(configJson["userId"])
+var token = getStr(configJson["token"])
 
 var url = baseUrl & "/tasks.json"
 var params = "?pageSize=100&include=overdue,nodate&sort=duedate" &
   "&responsible-party-ids=" & $userId
 
-var output = newFileStream("output.txt", fmWrite)
-var auth = encode(token & ":xxx", lineLen=1024)
+var outputStream = newFileStream("output.txt", fmWrite)
+var authorizationToken = encode(token & ":xxx", lineLen=1024)
 
 var client = newHttpClient()
-var response: string
-var parsedJson: JsonNode
+var responseString: string
+var responseObject: JsonNode
 
 client.headers = newHttpHeaders({
   "Content-Type": "Application/json",
-  "Authorization": "Basic " & auth
+  "Authorization": "Basic " & authorizationToken
 })
 
-response = client.getContent(url & params)
-parsedJson = parseJson(response)
+responseString = client.getContent(url & params)
+responseObject = parseJson(responseString)
 
-for item in parsedJson["todo-items"]:
-  output.writeLine(getStr(item["company-name"]) & getStr(item["content"]))
-output.close()
+for item in responseObject["todo-items"]:
+  var line = getStr(item["company-name"]) & ": " & getStr(item["content"])
+  outputStream.writeLine(line)
+
+outputStream.close()
