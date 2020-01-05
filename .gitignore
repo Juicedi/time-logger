@@ -1,4 +1,6 @@
 output.*
 *.exe
+config.json
+nimcache
 dist
 logs
