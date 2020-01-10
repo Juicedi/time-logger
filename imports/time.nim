@@ -1,11 +1,8 @@
 import terminal, times
 
-type TimerState* = enum
-  paused, running
-
 var accummulator: Duration
 var startTime = getTime()
-var timerCurrentState* = paused
+var isTimePaused* = false
 
 proc accummulateTime*(): void =
   accummulator += getTime() - startTime
@@ -19,10 +16,11 @@ proc restartTimer*(): void =
   accummulator = DurationZero
 
 proc togglePause*() =
-  timerCurrentState = if timerCurrentState == paused: running else: paused
+  isTimePaused = not isTimePaused
   eraseLine()
 
-  if timerCurrentState == paused:
+  if isTimePaused == true:
     accummulateTime()
   else:
     startTime = getTime()
+
