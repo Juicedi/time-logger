@@ -18,7 +18,9 @@ easier to use than the applications in the web.
 
 ### Todos
 * Load previus project and task
+  * This can be a separate program from the time-logger. The tasks and
+    projects don't need to be updated constantly. Just when user wants to
+    update them by running the update program.
+  * Ensure the times are synchronized only once by saving the log id from server
 * Show today, this week, cummulated times
 * Fix input issue when leaving taskloop to mainloop (first input not responsive)
-* Ensure the times are synchronized only once by saving the log id from server
-    * check how the api calls are actually done
