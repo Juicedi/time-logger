@@ -34,6 +34,7 @@ proc taskInputLoop(): void =
   while true:
     asyncChar = ' '
 
+    # FIXME: Causes issues when user has already exited this loop
     if asyncInput.isReady():
       asyncChar = ^asyncInput
       asyncInput = spawn getch()
@@ -58,6 +59,7 @@ proc taskInputLoop(): void =
         setCursorXPos(0)
         stdout.write(project & " - " & task & ": " & getAccummulatedTime())
       else:
+        # FIXME: "paused" text will be written each loop
         stdout.write("paused")
 
     sleep(100)
