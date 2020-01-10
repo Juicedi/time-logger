@@ -3,7 +3,7 @@ import json
 import httpClient
 from base64 import encode
 
-var configStream = newFileStream("../config.json", fmRead)
+var configStream = newFileStream("../../config.json", fmRead)
 var configJson = parseJson(configStream.readAll())
 var baseUrl = getStr(configJson["baseUrl"])
 var userId = getStr(configJson["userId"])
