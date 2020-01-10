@@ -54,7 +54,7 @@ proc taskInputLoop(): void =
       saveCurrentTask(getAccummulatedTime())
       break
     else:
-      if isTimePaused == false:
+      if timerCurrentState == running:
         accummulateTime()
         setCursorXPos(0)
         stdout.write(project & " - " & task & ": " & getAccummulatedTime())
