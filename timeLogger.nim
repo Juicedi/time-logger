@@ -2,11 +2,13 @@ import terminal, threadpool, os
 import ./imports/tasks
 import ./imports/time
 
+type Keys = enum
+  esc = 27,
+  n = 110,
+  p = 112,
+  s = 115
+
 const
-  escOrd = 27
-  pOrd   = 112
-  sOrd   = 115
-  nOrd   = 110
   taskMenuHelperText =
     "p = pause, " &
     "s = save and exit, " &
@@ -37,16 +39,16 @@ proc taskInputLoop(): void =
       asyncInput = spawn getch()
 
     case asyncChar.ord:
-    of escOrd:
+    of esc.ord:
       showCursor()
       break
-    of pOrd:
+    of p.ord:
       togglePause()
-    of nOrd:
+    of n.ord:
       showCursor()
       startNewTask()
       hideCursor()
-    of sOrd:
+    of s.ord:
       showCursor()
       saveCurrentTask(getAccummulatedTime())
       break
@@ -64,15 +66,16 @@ proc mainMenuLoop(): void =
   var input: char
 
   while true:
-    input = getch()
-    if input.ord == escOrd: break
-    # if input == number: start previously run task
-
-    if input == 'n':
+    case getch().ord
+    of esc.ord: break
+    of n.ord:
       restartTimer()
       startNewTask()
       taskInputLoop()
       echo "\n\n" & mainMenuHelperText
+    # if input == number: start previously run task
+    else:
+      echo "Please press a valid key"
 
 startNewTask()
 taskInputLoop()
