@@ -10,15 +10,15 @@ type Keys = enum
 
 const
   taskMenuHelperText =
-    "p = pause, " &
-    "s = save and exit, " &
-    "esc = exit without saving, " &
-    "n = rename" &
+    $p & " = pause, " &
+    $s & " = save and exit, " &
+    $esc & " = exit without saving, " &
+    $n & " = rename" &
     "\n"
   mainMenuHelperText =
     "# = continue previous task, " &
-    "esc = exit, " &
-    "n = start new task" &
+    $esc & " = exit, " &
+    $n & " = start new task" &
     "\n"
 
 proc startNewTask(): void =
