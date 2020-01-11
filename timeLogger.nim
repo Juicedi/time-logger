@@ -6,61 +6,46 @@ type Keys = enum
   esc = 27,
   n = 110,
   p = 112,
-  s = 115
+  r = 114,
+  s = 115,
+  w = 119,
+  x = 120
 
 const
-  taskMenuHelperText =
-    $p & " = pause, " &
-    $s & " = save and exit, " &
-    $esc & " = exit without saving, " &
-    $n & " = rename" &
+  watchHelperText =
+    $esc & " = stop watch " &
     "\n"
   mainMenuHelperText =
-    "# = continue previous task, " &
-    $esc & " = exit, " &
-    $n & " = start new task" &
+    "# = continue previous task,\n" &
+    $esc & " = exit,\n" &
+    $w & " = watch task,\n" &
+    $s & " = save and stop task,\n" &
+    $r & " = rename task,\n" &
+    $x & " = print current status,\n" &
+    $p & " = start/stop task,\n" &
+    $n & " = start new task,\n" &
     "\n"
 
-proc startNewTask(): void =
-  changeNames()
-  echo taskmenuHelperText
-
-proc taskInputLoop(): void =
+proc watchLoop(): void =
   var asyncChar: char
   var asyncInput = spawn getch()
 
+  echo watchHelperText
   hideCursor()
 
   while true:
     asyncChar = ' '
 
-    # FIXME: Causes issues when user has already exited this loop
     if asyncInput.isReady():
       asyncChar = ^asyncInput
-      asyncInput = spawn getch()
 
-    case asyncChar.ord:
-    of esc.ord:
+    accummulateTime()
+    setCursorXPos(0)
+    stdout.write(project & " - " & task & ": " & getAccummulatedTime())
+
+    if asyncChar.ord == esc.ord:
       showCursor()
       break
-    of p.ord:
-      togglePause()
-    of n.ord:
-      showCursor()
-      startNewTask()
-      hideCursor()
-    of s.ord:
-      showCursor()
-      saveCurrentTask(getAccummulatedTime())
-      break
-    else:
-      if isTimePaused == false:
-        accummulateTime()
-        setCursorXPos(0)
-        stdout.write(project & " - " & task & ": " & getAccummulatedTime())
-      else:
-        # FIXME: "paused" text will be written each loop
-        stdout.write("paused")
 
     sleep(100)
 
@@ -69,17 +54,38 @@ proc mainMenuLoop(): void =
 
   while true:
     case getch().ord
-    of esc.ord: break
+    of esc.ord:
+      break
+    of p.ord:
+      togglePause()
+
+      if isTimePaused:
+        echo "Paused"
+      else:
+        echo "Resumed task"
+        echo getAccummulatedTime()
+    of s.ord:
+      accummulateTime()
+      saveCurrentTask(getAccummulatedTime())
+      echo "\n\n" & mainMenuHelperText
+    of x.ord:
+      accummulateTime()
+      setCursorXPos(0)
+      stdout.write(project & " - " & task & ": " & getAccummulatedTime())
+    of w.ord:
+      watchLoop()
+      echo "\n\n" & mainMenuHelperText
+    of r.ord:
+      changeNames()
+      echo "\n\n" & mainMenuHelperText
     of n.ord:
       restartTimer()
-      startNewTask()
-      taskInputLoop()
+      changeNames()
       echo "\n\n" & mainMenuHelperText
     # if input == number: start previously run task
     else:
       echo "Please press a valid key"
 
-startNewTask()
-taskInputLoop()
+changeNames()
 echo "\n\n" & mainMenuHelperText
 mainMenuLoop()
