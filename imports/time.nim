@@ -17,10 +17,8 @@ proc restartTimer*(): void =
 
 proc togglePause*() =
   isTimePaused = not isTimePaused
-  eraseLine()
 
   if isTimePaused == true:
     accummulateTime()
   else:
     startTime = getTime()
-
