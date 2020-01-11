@@ -1,9 +1,11 @@
 import terminal, strutils
 import ./autocompletion
 
-const enterOrd = 13
-const backspaceOrd = 8
-const tabOrd = 9
+type
+  Keys = enum
+    backspace = 8,
+    tab = 9,
+    enter = 13
 
 proc eraseCurrentInputText(passedResult: string, padding: int): void =
   setCursorXPos(padding)
@@ -53,9 +55,9 @@ proc inputString*(min: int): string =
   while true:
     input = getch()
     case input.ord
-    of enterOrd: break
-    of backspaceOrd: result = removeCharacter(result)
-    of tabOrd: result = autocompleteInput(result)
+    of enter.ord: break
+    of backspace.ord: result = removeCharacter(result)
+    of tab.ord: result = autocompleteInput(result)
     else:
       pressedOtherKeyThanTab = true
       stdout.write(input)
