@@ -22,7 +22,15 @@ proc saveText*(project: string, task: string, comment: string, time: string): vo
     i = inputFilePath.open(fmWrite)
     i.close()
 
-  o.write(time & " -- ")
+  #[
+  # TODO: Figure out, how the log files should be formatted.
+  #
+  # 1. Format should be easy to parse
+  #   * Projects should be files?
+  #   * tasks, comments, time, date should be listed in the file
+  # 2. Date should be saved, so the recent logs could be parsed
+  ]#
+  o.writeLine(time)
   o.writeLine(comment)
   o.close()
 
