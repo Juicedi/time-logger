@@ -50,8 +50,6 @@ proc watchLoop(): void =
     sleep(100)
 
 proc mainMenuLoop(): void =
-  var input: char
-
   while true:
     case getch().ord
     of esc.ord:
@@ -82,7 +80,7 @@ proc mainMenuLoop(): void =
       restartTimer()
       changeNames()
       echo "\n\n" & mainMenuHelperText
-    # if input == number: start previously run task
+    # of char.ord: start previously run task
     else:
       echo "Please press a valid key"
 
