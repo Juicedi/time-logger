@@ -36,6 +36,10 @@ easier to use than the applications in the web.
   * Empty fields will result a default project or task name. It can be
     "Default" for now.
 
+* Create option to refresh fetched data or atleast give help how to do it
+
+* Autocomplete should use the fetched Project and task data
+
 * Each time log should have the date and time when the time log started
 
 * Show today, this week, cummulated times
