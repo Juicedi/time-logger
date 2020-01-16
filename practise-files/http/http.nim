@@ -29,7 +29,16 @@ responseString = client.getContent(url & params)
 responseObject = parseJson(responseString)
 
 for item in responseObject["todo-items"]:
-  var line = getStr(item["company-name"]) & ": " & getStr(item["content"])
+  var stuffs = [
+    $item["company-id"],
+    getStr(item["company-name"]),
+    $item["id"],
+    getStr(item["content"])
+  ]
+  var line: string
+  for i, stuff in stuffs:
+    if i > 0: line.add("::")
+    line.add(stuff)
   outputStream.writeLine(line)
 
 outputStream.close()
