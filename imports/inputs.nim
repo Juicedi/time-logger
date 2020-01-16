@@ -53,8 +53,7 @@ proc inputString*(min: int): string =
     return passedResult
 
   while true:
-    input = getch()
-    case input.ord
+    case getch().ord
     of enter.ord: break
     of backspace.ord: result = removeCharacter(result)
     of tab.ord: result = autocompleteInput(result)
