@@ -22,5 +22,20 @@ easier to use than the applications in the web.
     projects don't need to be updated constantly. Just when user wants to
     update them by running the update program.
   * Ensure the times are synchronized only once by saving the log id from server
+  * Gather users all project and task data separately
+
+* Handle different time logs
+  * Valid Project
+    * Project name = valid
+    * Task name = valid or empty
+
+  * Default Project
+    * Project name = empty
+    * Task name = anything or empty
+
+  * Empty fields will result a default project or task name. It can be
+    "Default" for now.
+
+* Each time log should have the date and time when the time log started
+
 * Show today, this week, cummulated times
-* Fix input issue when leaving taskloop to mainloop (first input not responsive)
