@@ -53,6 +53,7 @@ proc inputString*(min: int): string =
     return passedResult
 
   while true:
+    input = getch()
     case input.ord
     of enter.ord: break
     of backspace.ord: result = removeCharacter(result)
