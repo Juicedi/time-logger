@@ -1,7 +1,7 @@
 import os
 
-const logsPath = "logs/"
-const outputFile = "temp.txt"
+var logsPath = getAppDir() & "/logs/"
+var outputFile = getAppDir() & "/temp.txt"
 
 proc saveText*(project: string, task: string, comment: string, time: string): void =
   let projectPath = logsPath & project & "/"
@@ -36,5 +36,3 @@ proc saveText*(project: string, task: string, comment: string, time: string): vo
 
   discard tryRemoveFile(inputFilePath)
   moveFile(outputFile, inputFilePath)
-
-# saveText(project = "hello", task = "test", comment = "this is just a test")

@@ -17,6 +17,9 @@ This projects goal is to create a time logging tool that will be faster and
 easier to use than the applications in the web.
 
 ### Todos
+* Give early error if the log file can't be read or written and inform user how
+  to setup the log folder.
+
 * Load previus project and task
   * This can be a separate program from the time-logger. The tasks and
     projects don't need to be updated constantly. Just when user wants to
